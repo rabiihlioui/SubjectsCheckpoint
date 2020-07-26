@@ -16,14 +16,20 @@ export class HiredCvComponent implements OnInit, OnChanges {
 
   cvs = []
 
+  showHiringCVs = true
+
   constructor(private hiringService: HiringService) { }
 
   ngOnInit() {
   }
 
   ngOnChanges(){
-    console.log(this.cvs)
-    this.cvs = this.hiringService.getHiredCvs()
+    this.hiringService.showHiringSubject.subscribe(
+      (showFlag) => {
+        this.showHiringCVs = showFlag
+        this.cvs = this.hiringService.getHiredCvs()
+      }
+    )
   }
 
   unhireCv(id: number) {
@@ -31,6 +37,7 @@ export class HiredCvComponent implements OnInit, OnChanges {
   }
 
   unhireAllCvs() {
+    this.showHiringCVs = true
     this.hiringService.unhireAllCvs()
   }
 

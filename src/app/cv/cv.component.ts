@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Person } from '../person';
+import { CvService } from '../services/cv.service';
 
 @Component({
   selector: 'app-cv',
@@ -13,8 +14,7 @@ export class CvComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   selectItem(id){
     this.chosenItem = id

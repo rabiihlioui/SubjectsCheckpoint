@@ -1,11 +1,19 @@
 import { Injectable } from '@angular/core';
 
 import { Person } from '../person';
+import { NgForm } from '@angular/forms';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CvService {
+
+  name: string
+
+  getPersSubject = new Subject<Person>();
+
+  showDetailsSubject = new Subject<boolean>();
 
   pers = new Person(0,'','','',0,0,'','../../assets/images/developer.png','../../assets/images/coverDev.png')
 
@@ -25,17 +33,11 @@ export class CvService {
   constructor() { }
 
   retrievePersById(id: number) {
-    switch (id) {
-      case 0:
-        return this.cvList[0];
-      case 1:
-        return this.cvList[1];
-      case 2:
-        return this.cvList[2];
-      case 3:
-        return this.cvList[3];
-      case 4:
-        return this.cvList[4];
+    const long = this.cvList.length;
+    for (let i = 0; i < long; i++) {
+      if ( id == i ) {
+        return this.cvList[i];
+      }
     }
   }
 
@@ -53,6 +55,20 @@ export class CvService {
         return cv;
       }
     });
+  }
+
+  addCV(person: Person) {
+    person.id = this.cvList[this.cvList.length - 1].id + 1
+    person.picture = '../../assets/images/newPerson.png'
+    this.cvList.push(person); 
+  }
+
+  getPersDetails(id: number) {
+    this.getPersSubject.next(this.cvList[id])
+  }
+
+  showDetailsBlock(showFlag: boolean) {
+    this.showDetailsSubject.next(showFlag)
   }
 
 }

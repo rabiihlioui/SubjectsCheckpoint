@@ -1,5 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Person } from '../person';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ export class HiringService implements OnInit{
   hiredCvs = []
 
   hireFlag = false
+
+  showHiringSubject = new Subject<boolean>();
 
   constructor() { }
 
@@ -24,6 +27,8 @@ export class HiringService implements OnInit{
     this.hiredCvs.forEach(cv => {
       if ( cv.id == id ) {
         this.hiredCvs.splice(this.hiredCvs.indexOf(cv),1)
+        if ( !this.hiredCvs.length )
+          this.showHiringBlock(true);
       }
     });
   }
@@ -34,6 +39,10 @@ export class HiringService implements OnInit{
 
   getHiredCvs(){
     return this.hiredCvs
+  }
+
+  showHiringBlock(showFlag: boolean) {
+    this.showHiringSubject.next(showFlag)
   }
 
 }

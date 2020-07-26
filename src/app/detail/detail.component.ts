@@ -3,6 +3,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Person } from '../person';
 import { HiringService } from '../services/hiring.service';
 import { Router } from '@angular/router';
+import { CvService } from '../services/cv.service';
 
 @Component({
   selector: 'app-detail',
@@ -17,19 +18,28 @@ export class DetailComponent implements OnInit, OnChanges {
 
   cover: string
 
+  showDetails = true;
+
   constructor(
     private hiringService: HiringService,
-    private router: Router
+    private router: Router,
+    private cvService: CvService
     ) { }
 
   ngOnInit() {
   }
 
   ngOnChanges(){
-    this.pers = this.person
+    this.cvService.showDetailsSubject.subscribe(
+      (showFlag) => this.showDetails = showFlag
+    )
+    this.cvService.getPersSubject.subscribe(
+      (pers) => this.pers = pers
+    )
   }
 
   hireCv() {
+    this.hiringService.showHiringBlock(false);
     this.hiringService.hireCv(this.pers)
   }
 

@@ -11,8 +11,6 @@ import { CvService } from '../services/cv.service';
 export class ListComponent implements OnInit {
 
   chosenItemId: Person
-
-  @Output() chosenId = new EventEmitter()
   
   ids = []
 
@@ -26,9 +24,6 @@ export class ListComponent implements OnInit {
 
   chosenItem(itemId){
     this.chosenItemId = itemId
-    this.chosenId.emit(
-      this.chosenItemId
-    )
   }
 
   initializeIds() {

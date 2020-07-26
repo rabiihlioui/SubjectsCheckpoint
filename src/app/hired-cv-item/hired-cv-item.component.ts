@@ -19,7 +19,6 @@ export class HiredCvItemComponent implements OnInit,OnChanges {
   }
 
   ngOnChanges(){
-    console.log(this.person.name)
     this.pic = this.person.picture
     this.name = this.person.name
     this.firstName = this.person.firstname
